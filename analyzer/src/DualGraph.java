@@ -10,13 +10,13 @@ public class DualGraph {
 
     private Graph originGraph; // it's undirected graph
 
-    public static final int NOEDGE = 0;
+    private static final int NOEDGE = 0;
 
-    public static final int UNTRAVELED = 1;
+    private static final int UNTRAVELED = 1;
 
-    public static final int TRAVELED = 2;
+    private static final int TRAVELED = 2;
 
-    public static final double NOANGLE = 7; // because polar angle value cannot bigger than 2 * PI
+    private static final double NOANGLE = 7; // because polar angle value cannot bigger than 2 * PI
 
     /* constructor */
     DualGraph(Graph newOriginGraph) {
@@ -36,10 +36,10 @@ public class DualGraph {
         for (int i = 0; i < n; i += 1) {
             for (int j = 0; j < n; j += 1) {
                 if (edges[i][j] != 0) {
-                    edges[i][j] = DualGraph.UNTRAVELED;
+                    edges[i][j] = UNTRAVELED;
                 }
-                if (i > j && (edges[i][j] == DualGraph.UNTRAVELED || edges[j][i] == DualGraph.UNTRAVELED)) {
-                    edges[i][j] = edges[j][i] = DualGraph.UNTRAVELED;
+                if (i > j && (edges[i][j] == UNTRAVELED || edges[j][i] == UNTRAVELED)) {
+                    edges[i][j] = edges[j][i] = UNTRAVELED;
                 }
             }
         }
@@ -52,8 +52,8 @@ public class DualGraph {
         /* calculate angle of each edge */
         for (int i = 0; i < n; i += 1) {
             for (int j = 0; j < n; j += 1) {
-                if (edges[i][j] == DualGraph.NOEDGE) {
-                    polarAngle[i][j] = DualGraph.NOANGLE;
+                if (edges[i][j] == NOEDGE) {
+                    polarAngle[i][j] = NOANGLE;
                 }
                 else {
                     polarAngle[i][j] = Math.atan((nodes[j].getY() - nodes[i].getY()) / (nodes[j].getX() - nodes[i].getX())) + 0.0;
@@ -72,7 +72,7 @@ public class DualGraph {
             /* sort here */
             Arrays.sort(polarAngle[i]);
             for (int j = 0; j < n; j += 1) {
-                if (polarAngle[i][j] == DualGraph.NOANGLE) {
+                if (polarAngle[i][j] == NOANGLE) {
                     polarIndex[i][j] = -1;
                 }
                 else {
@@ -86,7 +86,7 @@ public class DualGraph {
         /* 3. Find an untraveled edge <u, v> and set it to present edge. */
         for (int i = 0; i < n; i += 1) {
             for (int j = 0; j < n; j += 1) {
-                if (edges[i][j] == DualGraph.NOEDGE || edges[i][j] == DualGraph.TRAVELED) {
+                if (edges[i][j] == NOEDGE || edges[i][j] == TRAVELED) {
                     continue;
                 }
                 /* 'edge' is present edge */
@@ -94,7 +94,7 @@ public class DualGraph {
                 while (true) { //TODO
                     System.out.print(u + " ");
                     /* Mark present edge <u, v> */
-                    edges[u][v] = DualGraph.TRAVELED;
+                    edges[u][v] = TRAVELED;
                     /* Find the last edge before <v, u> in outgoing edges of v according to polar index and set it to next present edge. */
                     int index = 0;
                     for (; index < n; index += 1) {
@@ -116,7 +116,7 @@ public class DualGraph {
                     u = v;
                     v = polarIndex[v][index];
                     /* Repeat till found present edge has been traveled. */
-                    if (edges[u][v] == DualGraph.TRAVELED) {
+                    if (edges[u][v] == TRAVELED) {
                         System.out.println();
                         break;
                     }
