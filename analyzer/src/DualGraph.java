@@ -49,7 +49,7 @@ public class DualGraph {
         /* 1. Change all edge in undirected graph to two-way edge in directed graph. (Already done) */
         /* 2. Order all outgoing edges of each node by polar angle. */
         double[][] polarAngle = new double[n][n]; // PI to 2 * PI
-        int[][] polarIndex = new int[n][n]; // store index
+        ArrayList<ArrayList<Integer>> polarIndex = new ArrayList<>();
         /* calculate angle of each edge */
         for (int i = 0; i < n; i += 1) {
             for (int j = 0; j < n; j += 1) {
@@ -72,16 +72,15 @@ public class DualGraph {
             }
             /* sort here */
             Arrays.sort(polarAngle[i]);
+            polarIndex.add(new ArrayList<>());
             for (int j = 0; j < n; j += 1) {
                 if (polarAngle[i][j] == NOANGLE) {
-                    polarIndex[i][j] = -1;
+                    break;
                 }
                 else {
-                    polarIndex[i][j] = (int)hashMap.get(polarAngle[i][j]);
+                    polarIndex.get(i).add((Integer)hashMap.get(polarAngle[i][j]));
                 }
-                System.out.print(polarIndex[i][j] + " ");
             }
-            System.out.println();
         }
 
         /* 3. Find an untraveled edge <u, v> and set it to present edge. */
@@ -95,33 +94,28 @@ public class DualGraph {
                 /* 'edge' is present edge */
                 regions.add(new ArrayList<>());
                 int u = i, v = j;
-                while (true) { //TODO
-                    //System.out.print(u + " ");
+                while (true) {
                     regions.get(regionsN).add(u);
                     /* Mark present edge <u, v> */
                     edges[u][v] = TRAVELED;
                     /* Find the last edge before <v, u> in outgoing edges of v according to polar index and set it to next present edge. */
                     int index = 0;
                     for (; index < n; index += 1) {
-                        if (polarIndex[v][index] == u) {
+                        if (polarIndex.get(v).get(index) == u) {
                             break;
                         }
                     }
                     if (index == 0) {
                         for (int k = 0; k < n; k += 1) {
-                            if (polarIndex[v][k] == -1) {
-                                index = k - 1;
-                                break;
-                            }
+                            index = polarIndex.get(v).size() - 1;
                         }
                     } else {
                         index -= 1;
                     }
                     u = v;
-                    v = polarIndex[v][index];
+                    v = polarIndex.get(v).get(index);
                     /* Repeat till found present edge has been traveled. */
                     if (edges[u][v] == TRAVELED) {
-                        //System.out.println();
                         regionsN += 1;
                         break;
                     }
@@ -135,9 +129,39 @@ public class DualGraph {
             System.out.println(Arrays.toString(arrayList.toArray()));
         }
 
+        int dualN = regions.size();
+        Point[] dualNodes = new Point[dualN];
+        for(int i = 0; i < dualN; i += 1) {
+            dualNodes[i] = new Point(0, 0);
+        }
+        int[][] dualEdges = new int[dualN][dualN];
 
+        /* 4. For each edge in origin graph, add edge between to regions in dual graph. */
+        for (int i = 0; i < originGraph.getN(); i += 1) {
+            for (int j = 0; j < originGraph.getN(); j += 1) {
+                if (i > j && ((originGraph.getEdges()[i][j] != 0 || originGraph.getEdges()[j][i] != 0))) {
+                    boolean mark = false;
+                    for (int k = 0; k < regions.size(); k += 1) {
+                        if (regions.get(k).indexOf(i) != -1 && regions.get(k).indexOf(j) != -1) {
+                            for (int l = regions.size() - 1; l >= 0; l -= 1) {
+                                if (regions.get(l).indexOf(i) != -1 && regions.get(l).indexOf(j) != -1) {
+                                    //dualEdges[k][l] = dualEdges[l][k] = (originGraph.getEdges()[i][j] != 0) ? originGraph.getEdges()[i][j] : originGraph.getEdges()[j][i];
+                                    dualEdges[k][l] += 1;
+                                    dualEdges[l][k] += 1;
+                                    mark = true;
+                                    break;
+                                }
+                            }
+                            if (mark == true) {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-        return directedGraph; //TODO
+        return new Graph(dualN, dualNodes, dualEdges);
     }
 
 }
