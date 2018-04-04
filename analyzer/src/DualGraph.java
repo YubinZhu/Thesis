@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -84,15 +85,19 @@ public class DualGraph {
         }
 
         /* 3. Find an untraveled edge <u, v> and set it to present edge. */
+        ArrayList<ArrayList<Integer>> regions = new ArrayList<>();
+        int regionsN = 0;
         for (int i = 0; i < n; i += 1) {
             for (int j = 0; j < n; j += 1) {
                 if (edges[i][j] == NOEDGE || edges[i][j] == TRAVELED) {
                     continue;
                 }
                 /* 'edge' is present edge */
+                regions.add(new ArrayList<>());
                 int u = i, v = j;
                 while (true) { //TODO
-                    System.out.print(u + " ");
+                    //System.out.print(u + " ");
+                    regions.get(regionsN).add(u);
                     /* Mark present edge <u, v> */
                     edges[u][v] = TRAVELED;
                     /* Find the last edge before <v, u> in outgoing edges of v according to polar index and set it to next present edge. */
@@ -109,21 +114,26 @@ public class DualGraph {
                                 break;
                             }
                         }
-                    }
-                    else {
+                    } else {
                         index -= 1;
                     }
                     u = v;
                     v = polarIndex[v][index];
                     /* Repeat till found present edge has been traveled. */
                     if (edges[u][v] == TRAVELED) {
-                        System.out.println();
+                        //System.out.println();
+                        regionsN += 1;
                         break;
                     }
                 }
             }
         }
 
+        System.out.println("--> " + regions.size() + " regions in total:");
+        for (ArrayList<Integer> arrayList : regions) {
+            /* System.out.println(arrayList.toString()); // not recommend */
+            System.out.println(Arrays.toString(arrayList.toArray()));
+        }
 
 
 
