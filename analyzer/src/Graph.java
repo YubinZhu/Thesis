@@ -10,7 +10,7 @@ public class Graph {
     private Point[] nodes; // each value represents the position of node;
     private int[][] edges; // each value represents the weight of directed edge.
 
-    /* constructor without parameter*/
+    /* constructor without parameter */
     Graph() {
         /* initialize n */
         n = 0;
@@ -20,7 +20,7 @@ public class Graph {
         edges = null;
     }
 
-    /* constructor with parameter*/
+    /* constructor with parameter */
     Graph(int newN, Point[] newNodes, int[][] newEdges){
         /* initialize n */
         n = newN;
