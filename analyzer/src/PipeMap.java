@@ -37,9 +37,7 @@ public class PipeMap {
             {0,0,0,0,0,0,0,0,0,0,0,0}
         };
         DualGraph dualGraph = new DualGraph(new Graph(n, points, edges));
-        dualGraph.getDualGraph().show();
-
-
+        dualGraph.show();
 
         //TODO: judge crossing point and duplicating edge
 

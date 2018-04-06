@@ -19,13 +19,16 @@ public class DualGraph {
 
     private static final double NOANGLE = 7; // because polar angle value cannot bigger than 2 * PI
 
+    private int dualN;
+
+    private ArrayList<Integer>[] dualRegions;
+
+    private ArrayList<ArrayList<ArrayList<Integer>>> dualEdges;
+
     /* constructor */
     DualGraph(Graph newOriginGraph) {
         originGraph = new Graph(newOriginGraph);
-    }
 
-    /* get dual graph */
-    public Graph getDualGraph() {
         /* make a directed graph based on origin graph */
         /* In directed graph, edges[i][j] represents status (no edge, untraveled or traveled) of the directed edge from node i to j. */
         Graph directedGraph = new Graph(originGraph);
@@ -123,18 +126,20 @@ public class DualGraph {
             }
         }
 
-        System.out.println("--> " + regions.size() + " regions in total:");
-        for (ArrayList<Integer> arrayList : regions) {
-            /* System.out.println(arrayList.toString()); // not recommend */
-            System.out.println(Arrays.toString(arrayList.toArray()));
+        dualN = regions.size();
+        dualRegions = new ArrayList[dualN];
+
+        for (int i = 0; i < dualN; i += 1) {
+            dualRegions[i] = regions.get(i);
         }
 
-        int dualN = regions.size();
-        Point[] dualNodes = new Point[dualN];
-        for(int i = 0; i < dualN; i += 1) {
-            dualNodes[i] = new Point(0, 0);
+        dualEdges = new ArrayList<>(); // store values of edges between two regions
+        for (int i = 0; i < dualN; i += 1) {
+            dualEdges.add(new ArrayList<>());
+            for (int j = 0; j < dualN; j += 1) {
+                dualEdges.get(i).add(new ArrayList<>());
+            }
         }
-        int[][] dualEdges = new int[dualN][dualN];
 
         /* 4. For each edge in origin graph, add edge between to regions in dual graph. */
         for (int i = 0; i < originGraph.getN(); i += 1) {
@@ -145,9 +150,8 @@ public class DualGraph {
                         if (regions.get(k).indexOf(i) != -1 && regions.get(k).indexOf(j) != -1) {
                             for (int l = regions.size() - 1; l >= 0; l -= 1) {
                                 if (regions.get(l).indexOf(i) != -1 && regions.get(l).indexOf(j) != -1) {
-                                    //dualEdges[k][l] = dualEdges[l][k] = (originGraph.getEdges()[i][j] != 0) ? originGraph.getEdges()[i][j] : originGraph.getEdges()[j][i];
-                                    dualEdges[k][l] += 1;
-                                    dualEdges[l][k] += 1;
+                                    dualEdges.get(k).get(l).add(originGraph.getEdges()[i][j]);
+                                    dualEdges.get(l).get(k).add(originGraph.getEdges()[i][j]);
                                     mark = true;
                                     break;
                                 }
@@ -161,7 +165,23 @@ public class DualGraph {
             }
         }
 
-        return new Graph(dualN, dualNodes, dualEdges);
+
+
+    }
+
+    public void show() {
+        System.out.println("--> " + dualN + " regions in total:");
+        for (ArrayList<Integer> arrayList : dualRegions) {
+            /* System.out.println(arrayList.toString()); // not recommend */
+            System.out.println(Arrays.toString(arrayList.toArray()));
+        }
+        System.out.println("--> dual matrix:");
+        for (ArrayList<ArrayList<Integer>> arrayListArrayList: dualEdges) {
+            for (ArrayList<Integer> arrayList: arrayListArrayList) {
+                System.out.print(Arrays.toString(arrayList.toArray()) + " ");
+            }
+            System.out.println();
+        }
     }
 
 }

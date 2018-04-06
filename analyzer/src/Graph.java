@@ -33,7 +33,12 @@ public class Graph {
         edges = new int[n][n];
         for (int i = 0; i < n; i += 1) {
             for (int j = 0;j < n; j += 1) {
-                edges[i][j] = newEdges[i][j];
+                if (i > j && edges[j][i] > 0) {
+                    edges[i][j] = edges[j][i];
+                }
+                else {
+                    edges[i][j] = newEdges[i][j];
+                }
             }
         }
     }
@@ -58,12 +63,12 @@ public class Graph {
 
     /* show the graph */
     public void show() {
-        System.out.println("-->n=" + n);
-        //System.out.println("-->nodes:");
+        System.out.println("--> n = " + n);
+        System.out.println("--> nodes:");
         for (int i = 0; i < n; i += 1) {
-            //System.out.println("x=" + nodes[i].x + ",y=" + nodes[i].y);
+            System.out.println("x = " + nodes[i].x + ", y = " + nodes[i].y);
         }
-        System.out.println("-->edges matrix:");
+        System.out.println("--> edges matrix:");
         for (int i = 0; i < n; i += 1) {
             for (int j = 0; j < n; j += 1) {
                 System.out.print(edges[i][j] + " ");
