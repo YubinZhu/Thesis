@@ -1,2 +1,2 @@
-# PipeAnalyzer
-For water pipe project
+# Thesis
+For thesis
