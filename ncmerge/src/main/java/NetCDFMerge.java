@@ -12,7 +12,7 @@ import ucar.nc2.write.Nc4ChunkingDefault;
 
 public class NetCDFMerge {
 
-    public static void run() throws IOException, InvalidRangeException{
+    public static void thflxMerge() throws IOException, InvalidRangeException{
         String target = "misc/thflx.nc";
 
         NetcdfFileWriter writer = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, target, null);

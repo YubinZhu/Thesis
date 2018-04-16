@@ -9,7 +9,7 @@ import java.io.IOException;
 public class NetCDFMergeTest {
     public static void main(String args[]) {
         try {
-            NetCDFMerge.run();
+            NetCDFMerge.thflxMerge();
         }
         catch (IOException e) {
             // TODO Auto-generated catch block
