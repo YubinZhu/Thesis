@@ -12,13 +12,9 @@ public class NetCDFMergeTest {
             NetCDFMerge.thflxMerge();
         }
         catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-            System.out.println("文件创建失败，请检查路径");
         } catch (InvalidRangeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-            System.out.println("文件写入错误，超出范围");
         }
     }
 }
