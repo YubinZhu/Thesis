@@ -10,6 +10,8 @@ public class NetCDFMergeTest {
     public static void main(String args[]) {
         try {
             NetCDFMerge.thflxMerge();
+            NetCDFMerge.sltflMerge();
+            NetCDFMerge.sshgMerge();
         }
         catch (IOException e) {
             e.printStackTrace();
