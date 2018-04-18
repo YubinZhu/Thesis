@@ -12,6 +12,9 @@ public class NetCDFMergeTest {
             NetCDFMerge.thflxMerge();
             NetCDFMerge.sltflMerge();
             NetCDFMerge.sshgMerge();
+            NetCDFMerge.dbss_obilMerge();
+            NetCDFMerge.dbss_obmlMerge();
+            NetCDFMerge.uflxMerge();
         }
         catch (IOException e) {
             e.printStackTrace();

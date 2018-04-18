@@ -1,10 +1,8 @@
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import ucar.ma2.*;
 import ucar.nc2.*;
-import ucar.nc2.write.Nc4ChunkingDefault;
 
 /**
  * Created by 朱宇斌 on 2018/4/10
@@ -16,8 +14,10 @@ public class NetCDFMerge {
 
     private static final int END_YEAR = 2018;
 
+    private static final String SOURCE = "misc/GODAS/";
+
     public static void thflxMerge() throws IOException, InvalidRangeException {
-        String target = "misc/thflx.nc";
+        String target = SOURCE + "merged/thflx.nc";
         NetcdfFileWriter writer = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, target, null);
 
         /* set dimensions */
@@ -35,7 +35,7 @@ public class NetCDFMerge {
 
         boolean mark = true;
         for (int year = START_YEAR; year <= END_YEAR; year += 1) {
-            String source = "misc/thflx/thflx." + year + ".nc";
+            String source = SOURCE + "thflx/thflx." + year + ".nc";
             NetcdfFile file = NetcdfFile.open(source);
 
             if (mark) {
@@ -60,7 +60,6 @@ public class NetCDFMerge {
                 /* write data */
                 writer.write(lon, new int [1], file.findVariable("lon").read());
                 writer.write(lat, new int [1], file.findVariable("lat").read());
-
             }
 
             /* write data */
@@ -76,7 +75,7 @@ public class NetCDFMerge {
     }
 
     public static void sltflMerge() throws IOException, InvalidRangeException {
-        String target = "misc/sltfl.nc";
+        String target = SOURCE + "merged/sltfl.nc";
         NetcdfFileWriter writer = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, target, null);
 
         /* set dimensions */
@@ -94,7 +93,7 @@ public class NetCDFMerge {
 
         boolean mark = true;
         for (int year = START_YEAR; year <= END_YEAR; year += 1) {
-            String source = "misc/sltfl/sltfl." + year + ".nc";
+            String source = SOURCE + "sltfl/sltfl." + year + ".nc";
             NetcdfFile file = NetcdfFile.open(source);
 
             if (mark) {
@@ -119,7 +118,6 @@ public class NetCDFMerge {
                 /* write data */
                 writer.write(lon, new int [1], file.findVariable("lon").read());
                 writer.write(lat, new int [1], file.findVariable("lat").read());
-
             }
 
             /* write data */
@@ -135,7 +133,7 @@ public class NetCDFMerge {
     }
 
     public static void sshgMerge() throws  IOException, InvalidRangeException {
-        String target = "misc/sshg.nc";
+        String target = SOURCE + "merged/sshg.nc";
         NetcdfFileWriter writer = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, target, null);
 
         /* set dimensions */
@@ -153,7 +151,7 @@ public class NetCDFMerge {
 
         boolean mark = true;
         for (int year = START_YEAR; year <= END_YEAR; year += 1) {
-            String source = "misc/sshg/sshg." + year + ".nc";
+            String source = SOURCE + "sshg/sshg." + year + ".nc";
             NetcdfFile file = NetcdfFile.open(source);
 
             if (mark) {
@@ -178,7 +176,6 @@ public class NetCDFMerge {
                 /* write data */
                 writer.write(lon, new int [1], file.findVariable("lon").read());
                 writer.write(lat, new int [1], file.findVariable("lat").read());
-
             }
 
             /* write data */
@@ -192,5 +189,183 @@ public class NetCDFMerge {
 
         writer.close();
     }
+
+    public static void dbss_obilMerge() throws IOException, InvalidRangeException {
+        String target = SOURCE + "merged/dbss_obil.nc";
+        NetcdfFileWriter writer = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, target, null);
+
+        /* set dimensions */
+        writer.addUnlimitedDimension("time");
+        writer.addDimension(null, "lat", 418);
+        writer.addDimension(null, "lon", 360);
+
+        /* set variables */
+        Variable lon = writer.addVariable(null, "lon", DataType.FLOAT, "lon");
+        Variable lat = writer.addVariable(null, "lat", DataType.FLOAT, "lat");
+        Variable time = writer.addVariable(null, "time", DataType.DOUBLE, "time");
+        Variable date = writer.addVariable(null, "date", DataType.INT, "time");
+        Variable timePlot = writer.addVariable(null, "timePlot", DataType.FLOAT, "time");
+        Variable dbss_obil = writer.addVariable(null, "dbss_obil", DataType.SHORT, "time lat lon");
+
+        boolean mark = true;
+        for (int year = START_YEAR; year <= END_YEAR; year += 1) {
+            String source = SOURCE + "dbss_obil/dbss_obil." + year + ".nc";
+            NetcdfFile file = NetcdfFile.open(source);
+
+            if (mark) {
+                mark = false; //do only once
+
+                /* copy global attributes */
+                List<Attribute> attributes = file.getGlobalAttributes();
+                for (Attribute attribute: attributes) {
+                    writer.addGroupAttribute(null, attribute);
+                }
+
+                /* copy variable attributes */
+                lon.addAll(file.findVariable("lon").getAttributes());
+                lat.addAll(file.findVariable("lat").getAttributes());
+                time.addAll(file.findVariable("time").getAttributes());
+                date.addAll(file.findVariable("date").getAttributes());
+                timePlot.addAll(file.findVariable("timePlot").getAttributes());
+                dbss_obil.addAll(file.findVariable("dbss_obil").getAttributes());
+
+                writer.create();
+
+                /* write data */
+                writer.write(lon, new int [1], file.findVariable("lon").read());
+                writer.write(lat, new int [1], file.findVariable("lat").read());
+            }
+
+            /* write data */
+            writer.write(time, new int[] {(year - START_YEAR) * 12}, file.findVariable("time").read());
+            writer.write(date, new int[] {(year - START_YEAR) * 12}, file.findVariable("date").read());
+            writer.write(timePlot, new int[] {(year - START_YEAR) * 12}, file.findVariable("timePlot").read());
+            writer.write(dbss_obil, new int[] {(year - START_YEAR) * 12, 0, 0}, file.findVariable("dbss_obil").read());
+
+            file.close();
+        }
+
+        writer.close();
+    }
+
+    public static void dbss_obmlMerge() throws IOException, InvalidRangeException {
+        String target = SOURCE + "merged/dbss_obml.nc";
+        NetcdfFileWriter writer = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, target, null);
+
+        /* set dimensions */
+        writer.addUnlimitedDimension("time");
+        writer.addDimension(null, "lat", 418);
+        writer.addDimension(null, "lon", 360);
+
+        /* set variables */
+        Variable lon = writer.addVariable(null, "lon", DataType.FLOAT, "lon");
+        Variable lat = writer.addVariable(null, "lat", DataType.FLOAT, "lat");
+        Variable time = writer.addVariable(null, "time", DataType.DOUBLE, "time");
+        Variable date = writer.addVariable(null, "date", DataType.INT, "time");
+        Variable timePlot = writer.addVariable(null, "timePlot", DataType.FLOAT, "time");
+        Variable dbss_obml = writer.addVariable(null, "dbss_obml", DataType.SHORT, "time lat lon");
+
+        boolean mark = true;
+        for (int year = START_YEAR; year <= END_YEAR; year += 1) {
+            String source = SOURCE + "dbss_obml/dbss_obml." + year + ".nc";
+            NetcdfFile file = NetcdfFile.open(source);
+
+            if (mark) {
+                mark = false; //do only once
+
+                /* copy global attributes */
+                List<Attribute> attributes = file.getGlobalAttributes();
+                for (Attribute attribute: attributes) {
+                    writer.addGroupAttribute(null, attribute);
+                }
+
+                /* copy variable attributes */
+                lon.addAll(file.findVariable("lon").getAttributes());
+                lat.addAll(file.findVariable("lat").getAttributes());
+                time.addAll(file.findVariable("time").getAttributes());
+                date.addAll(file.findVariable("date").getAttributes());
+                timePlot.addAll(file.findVariable("timePlot").getAttributes());
+                dbss_obml.addAll(file.findVariable("dbss_obml").getAttributes());
+
+                writer.create();
+
+                /* write data */
+                writer.write(lon, new int [1], file.findVariable("lon").read());
+                writer.write(lat, new int [1], file.findVariable("lat").read());
+            }
+
+            /* write data */
+            writer.write(time, new int[] {(year - START_YEAR) * 12}, file.findVariable("time").read());
+            writer.write(date, new int[] {(year - START_YEAR) * 12}, file.findVariable("date").read());
+            writer.write(timePlot, new int[] {(year - START_YEAR) * 12}, file.findVariable("timePlot").read());
+            writer.write(dbss_obml, new int[] {(year - START_YEAR) * 12, 0, 0}, file.findVariable("dbss_obml").read());
+
+            file.close();
+        }
+
+        writer.close();
+    }
+
+    public static void uflxMerge() throws IOException, InvalidRangeException {
+        String target = SOURCE + "merged/uflx.nc";
+        NetcdfFileWriter writer = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, target, null);
+
+        /* set dimensions */
+        writer.addUnlimitedDimension("time");
+        writer.addDimension(null, "lat", 418);
+        writer.addDimension(null, "lon", 360);
+
+        /* set variables */
+        Variable lon = writer.addVariable(null, "lon", DataType.FLOAT, "lon");
+        Variable lat = writer.addVariable(null, "lat", DataType.FLOAT, "lat");
+        Variable time = writer.addVariable(null, "time", DataType.DOUBLE, "time");
+        Variable date = writer.addVariable(null, "date", DataType.INT, "time");
+        Variable timePlot = writer.addVariable(null, "timePlot", DataType.FLOAT, "time");
+        Variable uflx = writer.addVariable(null, "uflx", DataType.SHORT, "time lat lon");
+
+        boolean mark = true;
+        for (int year = START_YEAR; year <= END_YEAR; year += 1) {
+            String source = SOURCE + "uflx/uflx." + year + ".nc";
+            NetcdfFile file = NetcdfFile.open(source);
+
+            if (mark) {
+                mark = false; //do only once
+
+                /* copy global attributes */
+                List<Attribute> attributes = file.getGlobalAttributes();
+                for (Attribute attribute: attributes) {
+                    writer.addGroupAttribute(null, attribute);
+                }
+
+                /* copy variable attributes */
+                lon.addAll(file.findVariable("lon").getAttributes());
+                lat.addAll(file.findVariable("lat").getAttributes());
+                time.addAll(file.findVariable("time").getAttributes());
+                date.addAll(file.findVariable("date").getAttributes());
+                timePlot.addAll(file.findVariable("timePlot").getAttributes());
+                uflx.addAll(file.findVariable("uflx").getAttributes());
+
+                writer.create();
+
+                /* write data */
+                writer.write(lon, new int [1], file.findVariable("lon").read());
+                writer.write(lat, new int [1], file.findVariable("lat").read());
+            }
+
+            /* write data */
+            writer.write(time, new int[] {(year - START_YEAR) * 12}, file.findVariable("time").read());
+            writer.write(date, new int[] {(year - START_YEAR) * 12}, file.findVariable("date").read());
+            writer.write(timePlot, new int[] {(year - START_YEAR) * 12}, file.findVariable("timePlot").read());
+            writer.write(uflx, new int[] {(year - START_YEAR) * 12, 0, 0}, file.findVariable("uflx").read());
+
+            file.close();
+        }
+
+        writer.close();
+    }
+
+
+
+
 
 }
