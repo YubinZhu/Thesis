@@ -9,12 +9,20 @@ import java.io.IOException;
 public class NetCDFMergeTest {
     public static void main(String args[]) {
         try {
-            NetCDFMerge.thflxMerge();
-            NetCDFMerge.sltflMerge();
-            NetCDFMerge.sshgMerge();
-            NetCDFMerge.dbss_obilMerge();
-            NetCDFMerge.dbss_obmlMerge();
-            NetCDFMerge.uflxMerge();
+            if (false) {
+                NetCDFMerge.thflxMerge();
+                NetCDFMerge.sltflMerge();
+                NetCDFMerge.sshgMerge();
+                NetCDFMerge.dbss_obilMerge();
+                NetCDFMerge.dbss_obmlMerge();
+                NetCDFMerge.uflxMerge();
+                NetCDFMerge.vflxMerge();
+                NetCDFMerge.saltMerge();
+                NetCDFMerge.ucurMerge();
+                NetCDFMerge.vcurMerge();
+                NetCDFMerge.dzdtMerge();
+                NetCDFMerge.pottmpMerge();
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
