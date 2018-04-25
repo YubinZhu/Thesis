@@ -8,15 +8,16 @@
     <script src="../lib/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-    <div id="main" style="width: 800px; height: 600px"></div>
+    <div id="main" style="width: 1600px; height: 1200px"></div>
     <script type="text/javascript">
         var myChart = echarts.init(document.getElementById('main'));
 
 
-        $.getJSON("flx.json", function (data) {
+        $.getJSON("http://127.0.0.1:9090/godas/flx", function (data) {
             var valMin = Infinity;
             var valMax = -Infinity;
 
+            data = [[0,0,1,0,1],[100,0,0,1,1],[100,100,-1,0,1]];
 
             myChart.setOption({
                 visualMap: {
@@ -59,8 +60,8 @@
                 series: [{
                     type: 'flowGL',
                     data: data,
-                    particleDensity: 64,
-                    particleSize: 5,
+                    particleDensity: 256,
+                    particleSize: 2,
                     itemStyle: {
                         opacity: 0.5
                     }
@@ -92,8 +93,6 @@
             });
 
         });
-
-
     </script>
 </body>
 </html>
