@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * Created by 朱宇斌 on 2018/3/21
@@ -6,41 +10,100 @@ import java.awt.*;
 
 public class PipeMap {
 
-    public static void main(String args[]) {
+    private static final String REGEX = ",";
 
-        int[][] testArray = new int[10000][10000];
-        int n = 12;
-        Point[] points = new Point[12];
-        points[0] = new Point(-1,3);
-        points[1] = new Point(0,-3);
-        points[2] = new Point(2,3);
-        points[3] = new Point(-3,-3);
-        points[4] = new Point(1,2);
-        points[5] = new Point(-2,1);
-        points[6] = new Point(-4,0);
-        points[7] = new Point(-3,-2);
-        points[8] = new Point(3,-3);
-        points[9] = new Point(1,-4);
-        points[10] = new Point(-2,-4);
-        points[11] = new Point(4,-4);
-        int[][] edges = new int[][]{
-            {0,0,0,0,1,1,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,1,1,0,0,0},
-            {0,0,0,0,1,0,0,0,1,0,0,0},
-            {0,0,0,0,0,0,1,1,0,0,1,0},
-            {0,0,0,0,0,1,0,0,1,0,0,0},
-            {0,0,0,0,0,0,1,1,0,0,0,0},
-            {0,0,0,0,0,0,0,1,0,0,0,0},
-            {0,0,0,0,0,0,0,0,1,0,1,0},
-            {0,0,0,0,0,0,0,0,0,1,0,1},
-            {0,0,0,0,0,0,0,0,0,0,1,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0}
-        };
-        DualGraph dualGraph = new DualGraph(new Graph(n, points, edges));
-        dualGraph.show();
+    private static final int PRECISION = 1000;
 
-        //TODO: judge crossing point and duplicating edge
+    public static void main(String args[]) throws IOException {
+
+        // read prepared file
+        String path = "misc/pipe/cascade_prepare.txt";
+        File file = new File(path);
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+
+        int n = Integer.parseInt(bufferedReader.readLine());
+        Point[] nodes = new Point[n];
+        for (int i = 0; i < n; i += 1) {
+            String[] strings;
+            strings = bufferedReader.readLine().split(REGEX);
+            nodes[i] = new Point();
+            nodes[i].setLocation(Double.parseDouble(strings[0]) * PRECISION, Double.parseDouble(strings[1]) * PRECISION);
+        }
+        int[][] edges = new int[n][n];
+        for (int i = 0; i < n; i += 1) {
+            String[] strings;
+            strings = bufferedReader.readLine().split(REGEX);
+            edges[i] = new int[n];
+            for (int j = 0; j < n; j += 1) {
+                edges[i][j] = Integer.parseInt(strings[j]);
+            }
+        }
+        for (int i = 0; i < n; i += 1) {
+            for (int j = 0; j < n; j += 1) {
+                if (edges[i][j] != 0) {
+                    edges[i][j] = 1;
+                }
+                if (i > j && (edges[i][j] == 1 || edges[j][i] == 1)) {
+                    edges[i][j] = edges[j][i] = 1;
+                }
+            }
+        }
+        int targetN = Integer.parseInt(bufferedReader.readLine());
+        Point[] targets = new Point[targetN];
+        for (int i = 0; i < targetN; i += 1) {
+            String[] strings;
+            strings = bufferedReader.readLine().split(REGEX);
+            targets[i] = new Point();
+            targets[i].setLocation(Double.parseDouble(strings[0]) * PRECISION, Double.parseDouble(strings[1]) * PRECISION);
+        }
+        bufferedReader.close();
+
+        HashSet hashSet = new HashSet();
+        for (int i = 0; i < n; i += 1) {
+            for (int j = i; j < n; j += 1) {
+                if (edges[i][j] != 0) {
+                    hashSet.add(new Point(i, j));
+                }
+            }
+        }
+
+        // binding target point
+        // result: each line represent the two index of nodes which make up edge
+        File targetFile = new File("misc/pipe/cascade_binding.txt");
+        Writer writer = new FileWriter(targetFile);
+
+        for (Point target : targets) {
+            Point minIndex = null;
+            double minDistance = Double.MAX_VALUE;
+            Iterator iterator = hashSet.iterator();
+            while(iterator.hasNext()) {
+                Point nodesIndex = (Point)iterator.next();
+                Point a = nodes[nodesIndex.x];
+                Point b = nodes[nodesIndex.y];
+                double distanceTargetA = Math.sqrt(Math.pow(target.x - a.x, 2) + Math.pow(target.y - a.y, 2));
+                double distanceTargetB = Math.sqrt(Math.pow(target.x - b.x, 2) + Math.pow(target.y - b.y, 2));
+                double distanceAB = Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+                double halfPerimeter = (distanceTargetA + distanceTargetB + distanceAB) / 2;
+                double heightToLineAB = Math.sqrt(halfPerimeter * (halfPerimeter - distanceTargetA) * (halfPerimeter - distanceTargetB) * (halfPerimeter - distanceAB)) * 2 / distanceAB;
+                double realDistance;
+                if (Math.pow(distanceTargetA, 2) > Math.pow(distanceTargetB, 2) + Math.pow(distanceAB, 2)) {
+                    realDistance = distanceTargetB;
+                } else if (Math.pow(distanceTargetB, 2) > Math.pow(distanceTargetA, 2) + Math.pow(distanceAB, 2)) {
+                    realDistance = distanceTargetA;
+                } else {
+                    realDistance = heightToLineAB;
+                }
+                if (realDistance < minDistance) {
+                    minDistance = realDistance;
+                    minIndex = nodesIndex;
+                }
+            }
+            writer.write(minIndex.x + "," + minIndex.y + "\n");
+        }
+        writer.close();
+
+        // edge-related map
+
 
     }
 

@@ -164,9 +164,6 @@ public class DualGraph {
                 }
             }
         }
-
-
-
     }
 
     public void show() {
@@ -175,12 +172,14 @@ public class DualGraph {
             /* System.out.println(arrayList.toString()); // not recommend */
             System.out.println(Arrays.toString(arrayList.toArray()));
         }
-        System.out.println("--> dual matrix:");
-        for (ArrayList<ArrayList<Integer>> arrayListArrayList: dualEdges) {
-            for (ArrayList<Integer> arrayList: arrayListArrayList) {
-                System.out.print(Arrays.toString(arrayList.toArray()) + " ");
+        if (false) {
+            System.out.println("--> dual matrix:");
+            for (ArrayList<ArrayList<Integer>> arrayListArrayList : dualEdges) {
+                for (ArrayList<Integer> arrayList : arrayListArrayList) {
+                    System.out.print(Arrays.toString(arrayList.toArray()) + " ");
+                }
+                System.out.println();
             }
-            System.out.println();
         }
     }
 
