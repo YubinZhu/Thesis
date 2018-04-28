@@ -1,8 +1,6 @@
 import java.awt.*;
 import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Created by 朱宇斌 on 2018/3/21
@@ -72,11 +70,13 @@ public class PipeMap {
         File targetFile = new File("misc/pipe/cascade_binding.txt");
         Writer writer = new FileWriter(targetFile);
 
+        Point[] targetIndex = new Point[targetN];
+        int count = 0;
         for (Point target : targets) {
             Point minIndex = null;
             double minDistance = Double.MAX_VALUE;
             Iterator iterator = hashSet.iterator();
-            while(iterator.hasNext()) {
+            while (iterator.hasNext()) {
                 Point nodesIndex = (Point)iterator.next();
                 Point a = nodes[nodesIndex.x];
                 Point b = nodes[nodesIndex.y];
@@ -99,11 +99,67 @@ public class PipeMap {
                 }
             }
             writer.write(minIndex.x + "," + minIndex.y + "\n");
+            targetIndex[count] = new Point(minIndex);
+            count += 1;
         }
         writer.close();
 
         // edge-related map
+        HashMap hashMap = new HashMap();
+        Iterator iterator = hashSet.iterator();
+        count = 0;
+        while (iterator.hasNext()) {
+            hashMap.put(count, iterator.next());
+            count += 1;
+        }
 
+        int convertedN = hashMap.size();
+        ArrayList[] convertedNode = new ArrayList[convertedN];
+        for (int i = 0; i < convertedN; i += 1) {
+            convertedNode[i] = new ArrayList();
+            for (int j = 0; j < targetN; j += 1) {
+                if (targetIndex[j].equals(hashMap.get(i)) || targetIndex[j].equals(new Point(((Point)hashMap.get(i)).y, ((Point)hashMap.get(i)).x))) {
+                    convertedNode[i].add(j);
+                }
+            }
+        }
+
+
+        int[][] convertedEdges = new int[convertedN][convertedN];
+        for (int i = 0; i < convertedN; i += 1) {
+            for (int j = 0; j < convertedN; j += 1) {
+                if (i == j) {
+                    continue;
+                }
+                Point pointI = (Point)hashMap.get(i);
+                Point pointJ = (Point)hashMap.get(j);
+                if (pointI.x == pointJ.x || pointI.x == pointJ.y || pointI.y == pointJ.x || pointI.y == pointJ.y) {
+                    convertedEdges[i][j] = 1;
+                }
+            }
+        }
+
+        targetFile = new File("misc/pipe/cascade_converted.txt");
+        writer = new FileWriter(targetFile);
+
+        writer.write(Integer.toString(convertedN) + "\n");
+
+        for (int i = 0; i < convertedN; i += 1) {
+            writer.write("[x=" + ((Point)hashMap.get(i)).x + ",y=" + ((Point)hashMap.get(i)).y + "]");
+            writer.write(Arrays.toString(convertedNode[i].toArray()) + "\n");
+        }
+
+        for (int i = 0; i < convertedN; i += 1) {
+            for (int j = 0; j < convertedN; j += 1) {
+                writer.write(Integer.toString(convertedEdges[i][j]));
+                if (j != convertedN - 1) {
+                    writer.write(",");
+                }
+            }
+            writer.write("\n");
+        }
+
+        writer.close();
 
     }
 
