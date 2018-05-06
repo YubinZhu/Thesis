@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Total downward heat flux at surface</title>
+    <script type="text/javascript" src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+    <div id="main" style="width: 1600px; height: 800px"></div>
+    <script>
+        var myChart = echarts.init(document.getElementById('main'));
+
+        $.getJSON('http://localhost:9090/godas/thflx?time=' + 2000 + '-' + 01).done(function (flxData) {
+            myChart.setOption({
+                title: {
+                    text: 'Total Downward Heat Flux (W/m2)',
+                    left: 'center'
+                },
+                tooltip: {
+                },
+                xAxis: {
+                    type: 'value',
+                    name: 'longitude',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#000'
+                        }
+                    },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'latitude',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#000'
+                        }
+                    },
+                    splitLine: {
+                        show: false
+                    }
+                },
+                visualMap: {
+                    type: 'piecewise',
+                    calculable: true,
+                    realtime: false,
+                    pieces: [
+                        {gt: 1000},
+                        {gt: 900, lt: 1000},
+                        {gt: 800, lt: 900},
+                        {gt: 700, lt: 800},
+                        {gt: 600, lt: 700},
+                        {gt: 500, lt: 600},
+                        {gt: 400, lt: 500},
+                        {gt: 300, lt: 400},
+                        {gt: 200, lt: 300},
+                        {gt: 100, lt: 200},
+                        {gt: 0, lt: 100},
+                        {value: 0, label: 'land', color: 'white'},
+                        {gt: -100, lt: 0},
+                        {gt: -200, lt: -100},
+                        {gt: -300, lt: -200},
+                        {gt: -400, lt: -300},
+                        {gt: -500, lt: -400},
+                        {gt: -600, lt: -500},
+                        {gt: -700, lt: -600},
+                        {gt: -800, lt: -700},
+                        {gt: -900, lt: -800},
+                        {gt: -1000, lt: -900},
+                        {lt: -1000}
+                    ],
+                    inRange: {
+                        color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                    }
+                },
+                series: [{
+                    name: 'thflx',
+                    type: 'heatmap',
+                    data: flxData,
+                    itemStyle: {
+                        emphasis: {
+                            borderColor: '#333',
+                            borderWidth: 1
+                        }
+                    },
+                    progressive: 1000,
+                    animation: false
+                }]
+            });
+        });
+    </script>
+</body>
+</html>
