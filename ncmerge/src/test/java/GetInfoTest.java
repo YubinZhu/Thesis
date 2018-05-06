@@ -20,9 +20,7 @@ public class GetInfoTest {
 
     public static void main(String args[]) {
         try {
-            String[] strings = {"thflx", "sltfl", "sshg",
-                    "dbss_obil", "dbss_obml", "uflx", "vflx",
-                    "salt", "ucur", "vcur", "dzdt", "pottmp"};
+            String[] strings = {"thflx", "sltfl", "sshg", "dbss_obil", "dbss_obml", "uflx", "vflx", "salt", "ucur", "vcur", "dzdt", "pottmp"};
             for (String string : strings) {
                 NetcdfFile thflxNC = NetcdfFile.open("misc/GODAS/merged/" + string + ".nc");
                 System.out.println(thflxNC.findVariable(string));
