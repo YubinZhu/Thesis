@@ -128,6 +128,6 @@ public class GodasController {
                                                @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
-        return new PotentialTemperature().getSalt(timeIndex, level - 1, fromLat, toLat, fromLon, toLon);
+        return new PotentialTemperature().getPottmp(timeIndex, level - 1, fromLat, toLat, fromLon, toLon);
     }
 }
