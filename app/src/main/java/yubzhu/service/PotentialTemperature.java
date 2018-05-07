@@ -22,7 +22,7 @@ public class PotentialTemperature {
 
     private static final short FILL_VALUE = 32767;
 
-    public JSONArray getSalt(int timeIndex, int levelIndex, float fromLat, float toLat, float fromLon, float toLon) {
+    public JSONArray getPottmp(int timeIndex, int levelIndex, float fromLat, float toLat, float fromLon, float toLon) {
         JSONArray saltJsonArray = new JSONArray();
         try {
             NetcdfFile saltNC = NetcdfFile.open(GodasConfig.GODAS_PATH + "/salt.nc");
