@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Momentum</title>
-    <script type="text/javascript" src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
     <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
@@ -12,7 +12,7 @@
     <script type="text/javascript">
         var myChart = echarts.init(document.getElementById('main'));
 
-        $.getJSON('http://localhost:9090/godas/cur?time=' + 2000 + '-' + 01).done(function (flxData) {
+        $.getJSON('http://localhost:9090/godas/mmtflx?time=2000-01').done(function (flxData) {
             myChart.setOption({
                 title: {
                     text: 'Momentum Flux (N/m2)',
