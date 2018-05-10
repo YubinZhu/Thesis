@@ -11,4 +11,6 @@ gen
 /misc/GODAS/
 /app/target/
 /misc/pipe/
-/ui/lib/
+/ui/AdminLTE-2.4.3/
+/ui/app/bower_components/
+/ui/app/dist/
