@@ -39,7 +39,7 @@ public class GodasMixingController {
                                       @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                       @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                       @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                      @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                      @RequestParam(value = "to_lon", defaultValue = "395.5") float toLon) {
         JSONArray jsonArrayThflx = new GodasController().queryTotalDownwardHeatFlux(time, fromLat, toLat, fromLon, toLon);
         JSONArray jsonArraySltfl = new GodasController().querySaltFlux(time, fromLat, toLat, fromLon, toLon);
         JSONArray jsonArraySshg = new GodasController().querySeaSurfaceHeight(time, fromLat, toLat, fromLon, toLon);
@@ -69,7 +69,7 @@ public class GodasMixingController {
                                       @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                       @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                       @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                      @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                      @RequestParam(value = "to_lon", defaultValue = "395.5") float toLon) {
         JSONArray jsonArraySalt = new GodasController().querySalinity(time, level, fromLat, toLat, fromLon, toLon);
         JSONArray jsonArrayDzdt = new GodasController().queryGeometricVerticalVelocity(time, level, fromLat, toLat, fromLon, toLon);
         JSONArray jsonArrayPottmp = new GodasController().queryPotentialTemperature(time, level, fromLat, toLat, fromLon, toLon);
@@ -79,8 +79,8 @@ public class GodasMixingController {
             jsonArray.put(((JSONArray)jsonArraySalt.get(i)).get(0));
             jsonArray.put(((JSONArray)jsonArraySalt.get(i)).get(1));
             jsonArray.put(((JSONArray)jsonArraySalt.get(i)).get(2));
-            jsonArray.put(((JSONArray)jsonArrayDzdt.get(i)).get(2));
             jsonArray.put(((JSONArray)jsonArrayPottmp.get(i)).get(2));
+            jsonArray.put(((JSONArray)jsonArrayDzdt.get(i)).get(2));
             if ((double)jsonArray.get(2) == 0 && (double)jsonArray.get(3) == 0 && (double)jsonArray.get(4) == 0) {
                 continue;
             }

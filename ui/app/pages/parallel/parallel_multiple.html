@@ -99,9 +99,15 @@
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">GODAS visualize options</li>
                 <li>
-                    <a href="#">
+                    <a href="../../index.html">
                         <i class="fa fa-link"></i>
                         <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../pipeline.html">
+                        <i class="fa fa-link"></i>
+                        <span>Pipeline</span>
                     </a>
                 </li>
                 <li class="treeview">
@@ -113,21 +119,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#">Surface Level</a></li>
-                        <li><a href="#">Multiple Level</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-link"></i>
-                        <span>Scatter</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#">Surface Level</a></li>
-                        <li><a href="#">Multiple Level</a></li>
+                        <li><a href="../../pages/line/line_surface.html">Surface Level</a></li>
+                        <li><a href="../../pages/line/line_multiple.html">Multiple Level</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -143,7 +136,7 @@
                         <li><a href="../../pages/heatmap/heatmap_multiple.html">Multiple Level</a></li>
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-link"></i>
                         <span>Parallel</span>
@@ -153,7 +146,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="../../pages/parallel/parallel_surface.html">Surface Level</a></li>
-                        <li><a href="../../pages/parallel/parallel_multiple.html">Multiple Level</a></li>
+                        <li class="active"><a href="#">Multiple Level</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -335,17 +328,25 @@
                     color: ['#d94e5d','#eac736','#50a3ba'].reverse()
                 }
             },
+            toolbox: {
+                feature: {
+                    saveAsImage: {
+                        title: 'save'
+                    }
+                }
+            },
             parallel: {
                 parallelAxisDefault: {
-                    name: 'null'
+                    name: 'null',
+                    scale: true
                 }
             },
             parallelAxis: [
                 {dim: 0, name: 'longitude'},
                 {dim: 1, name: 'latitude'},
                 {dim: 2, name: 'salt'},
-                {dim: 3, name: 'dzdt'},
-                {dim: 4, name: 'pottmp'}
+                {dim: 3, name: 'pottmp'},
+                {dim: 4, name: 'dzdt'}
             ],
             series: {
                 type: 'parallel',
@@ -361,6 +362,7 @@
             var newElement = document.createElement("div");
             newElement.innerHTML = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-ban"></i> Alert!</h4>You cannot query data after 2018-03. </div>';
             document.getElementById('alert').innerHTML = newElement.innerHTML;
+            $(window).scrollTop(0);
         } else {
             $.getJSON('http://localhost:9090/godas/mixing/4d/nonvector?time=' + $('#year').val() + '-' + $('#month').val() + '&level=' + $('#level').val()).done(function (data) {
                 myChart.setOption({

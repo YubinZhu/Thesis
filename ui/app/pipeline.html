@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>GODAS Viz Platform</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="../../dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
     <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -58,12 +58,12 @@
                     </li>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs">yubzhu</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
-                                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                 <p>yubzhu - The Developer
                                     <small>For Thesis</small>
                                 </p>
@@ -89,7 +89,7 @@
         <section class="sidebar">
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>yubzhu</p>
@@ -99,9 +99,15 @@
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">GODAS visualize options</li>
                 <li>
-                    <a href="#">
+                    <a href="index.html">
                         <i class="fa fa-link"></i>
                         <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#">
+                        <i class="fa fa-link"></i>
+                        <span>Pipeline</span>
                     </a>
                 </li>
                 <li class="treeview">
@@ -113,21 +119,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#">Surface Level</a></li>
-                        <li><a href="#">Multiple Level</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-link"></i>
-                        <span>Scatter</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#">Surface Level</a></li>
-                        <li><a href="#">Multiple Level</a></li>
+                        <li><a href="pages/line/line_surface.html">Surface Level</a></li>
+                        <li><a href="pages/line/line_multiple.html">Multiple Level</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -139,8 +132,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../pages/heatmap/heatmap_surface.html">Surface Level</a></li>
-                        <li><a href="../../pages/heatmap/heatmap_multiple.html">Multiple Level</a></li>
+                        <li><a href="pages/heatmap/heatmap_surface.html">Surface Level</a></li>
+                        <li><a href="pages/heatmap/heatmap_multiple.html">Multiple Level</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -152,8 +145,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../pages/parallel/parallel_surface.html">Surface Level</a></li>
-                        <li><a href="../../pages/parallel/parallel_multiple.html">Multiple Level</a></li>
+                        <li><a href="pages/parallel/parallel_surface.html">Surface Level</a></li>
+                        <li><a href="pages/parallel/parallel_multiple.html">Multiple Level</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -165,8 +158,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../pages/flowgl/flowgl_surface.html">Surface Level</a></li>
-                        <li><a href="../../pages/flowgl/flowgl_multiple.html">Multiple Level</a></li>
+                        <li><a href="pages/flowgl/flowgl_surface.html">Surface Level</a></li>
+                        <li><a href="pages/flowgl/flowgl_multiple.html">Multiple Level</a></li>
                     </ul>
                 </li>
             </ul>
@@ -174,20 +167,149 @@
     </aside>
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>Page Header
-                <small>Optional description</small>
+            <h1>Pipeline
+                <small>Describe backend pipeline</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> GODAS Viz Options</a></li>
-                <li class="active">Here</li>
+                <li class="active">Pipeline</li>
             </ol>
         </section>
         <section class="content container-fluid">
-
-            <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
-
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Pipeline Description</h3>
+                        </div>
+                        <div class="box-body">
+                            <p>todo..</p>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Spring Restful Service Mapping Table</h3>
+                        </div>
+                        <div class="box-body">
+                            <p>todo..</p>
+                            <table class="table table-striped">
+                                <tr>
+                                    <td><span class="text-primary text-bold">GET Request Url</span></td>
+                                    <td><span class="text-primary text-bold">Parameters in Query String</span></td>
+                                    <td><span class="text-primary text-bold">Optional Parameters</span></td>
+                                    <td><span class="text-primary text-bold">Description</span></td>
+                                    <td><span class="text-primary text-bold">Return Java Type</span></td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/thflx</td>
+                                    <td>time</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Total downward heat flux at surface</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/sltfl</td>
+                                    <td>time</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Salt Flux</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/sshg</td>
+                                    <td>time</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Sea Surface Height Relative to Geoid</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/dbss_obil</td>
+                                    <td>time</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Geometric Depth Below Sea Surface - Isothermal Layer</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/dbss_obml</td>
+                                    <td>time</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Geometric Depth Below Sea Surface - Mixing Layer</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/mmtflx</td>
+                                    <td>time</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Momentum flux</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/salt</td>
+                                    <td>time, level</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Salinity</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/dzdt</td>
+                                    <td>time, level</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Geometric vertical velocity (dz/dt)</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/pottmp</td>
+                                    <td>time, level</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Potential temperature</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/cur</td>
+                                    <td>time, level</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Current</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/mixing/basicinfo</td>
+                                    <td>null</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>Variables Attributes</td>
+                                    <td>String</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/mixing/3d/nonvector</td>
+                                    <td>time</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>all of 3-dimension datasets without momentum flux</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/mixing/4d/nonvector</td>
+                                    <td>time, level</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>all of 4-dimension datasets without current</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/stat/3d</td>
+                                    <td>dataset, time, aggr_method, aggr_dim</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>customized aggregated data of 3-dimension</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                                <tr>
+                                    <td>/godas/stat/4d</td>
+                                    <td>dataset, time, level, aggr_method, aggr_dim</td>
+                                    <td>from_lat, to_lat, from_lon, to_lon</td>
+                                    <td>customized aggregated data of 4-dimension</td>
+                                    <td>JSONArray</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
     <footer class="main-footer">
@@ -251,8 +373,8 @@
     </aside>
     <div class="control-sidebar-bg"></div>
 </div>
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../../dist/js/adminlte.min.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="dist/js/adminlte.min.js"></script>
 </body>
 </html>

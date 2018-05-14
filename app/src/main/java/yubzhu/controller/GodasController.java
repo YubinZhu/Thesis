@@ -21,7 +21,7 @@ public class GodasController {
                                                 @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                                 @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                                 @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                                @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                                @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new TotalDownwardHeatFlux().getThflx(timeIndex, fromLat, toLat, fromLon, toLon);
@@ -33,7 +33,7 @@ public class GodasController {
                                        @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                        @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                        @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                       @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                       @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new MomentumFlux().getMmtflx(timeIndex, fromLat, toLat, fromLon, toLon);
@@ -44,7 +44,7 @@ public class GodasController {
                                    @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                    @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                    @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                   @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                   @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new SaltFlux().getSltfl(timeIndex, fromLat, toLat, fromLon, toLon);
@@ -55,7 +55,7 @@ public class GodasController {
                                            @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                            @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                            @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                           @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                           @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new SeaSurfaceHeight().getSshg(timeIndex, fromLat, toLat, fromLon, toLon);
@@ -66,7 +66,7 @@ public class GodasController {
                                                                        @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                                                        @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                                                        @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                                                       @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                                                       @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new GeometricDepthBelowSeaSurfaceIsothermalLayer().getDbss_obil(timeIndex, fromLat, toLat, fromLon, toLon);
@@ -77,7 +77,7 @@ public class GodasController {
                                                                    @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                                                    @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                                                    @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                                                   @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                                                   @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new GeometricDepthBelowSeaSurfaceMixingLayer().getDbss_obml(timeIndex, fromLat, toLat, fromLon, toLon);
@@ -89,7 +89,7 @@ public class GodasController {
                                    @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                    @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                    @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                   @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                   @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new Salinity().getSalt(timeIndex, level - 1, fromLat, toLat, fromLon, toLon);
@@ -101,7 +101,7 @@ public class GodasController {
                                   @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                   @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                   @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                  @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                  @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new Current().getCur(timeIndex, level - 1, fromLat, toLat, fromLon, toLon);
@@ -113,7 +113,7 @@ public class GodasController {
                                                     @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                                     @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                                     @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                                    @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                                    @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new GeometricVerticalVelocity().getDzdt(timeIndex, level - 1, fromLat, toLat, fromLon, toLon);
@@ -125,7 +125,7 @@ public class GodasController {
                                                @RequestParam(value = "from_lat", defaultValue = "-74.5") float fromLat,
                                                @RequestParam(value = "to_lat", defaultValue = "64.5") float toLat,
                                                @RequestParam(value = "from_lon", defaultValue = "0.5") float fromLon,
-                                               @RequestParam(value = "to_lon", defaultValue = "259.5") float toLon) {
+                                               @RequestParam(value = "to_lon", defaultValue = "359.5") float toLon) {
         DateTime dateTime = DateTime.parse(time, DateTimeFormat.forPattern("yyyy-MM"));
         int timeIndex = (dateTime.getYear() - GodasConfig.START_TIME.getYear()) * 12 + dateTime.getMonthOfYear() - GodasConfig.START_TIME.getMonthOfYear();
         return new PotentialTemperature().getPottmp(timeIndex, level - 1, fromLat, toLat, fromLon, toLon);

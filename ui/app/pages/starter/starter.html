@@ -149,7 +149,7 @@
                         <li><a href="../../pages/parallel/parallel_multiple.html">Multiple Level</a></li>
                     </ul>
                 </li>
-                <li class="treeview active">
+                <li class="treeview">
                     <a href="#">
                         <i class="fa fa-link"></i>
                         <span>FlowGl</span>
@@ -159,7 +159,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="../../pages/flowgl/flowgl_surface.html">Surface Level</a></li>
-                        <li class="active"><a href="#">Multiple Level</a></li>
+                        <li><a href="../../pages/flowgl/flowgl_multiple.html">Multiple Level</a></li>
                     </ul>
                 </li>
             </ul>
@@ -167,79 +167,20 @@
     </aside>
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>FlowGL - Multiple Level
-                <small>For current (cur) including ucur and vcur</small>
+            <h1>Page Header
+                <small>Optional description</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> GODAS Viz Options</a></li>
-                <li><a href="#">FlowGL</a></li>
-                <li class="active">Multiple Level</li>
+                <li class="active">Here</li>
             </ol>
         </section>
         <section class="content container-fluid">
-            <div id="alert">
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-primary">
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label>Year</label>
-                                        <select class="form-control" id="year">
-                                            <option selected="selected">2000</option>
-                                            <script>
-                                                for (var i = 2001; i <= 2018; i += 1) {
-                                                    document.write('<option>'+i+'</option>');
-                                                }
-                                            </script>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label>Month</label>
-                                        <select class="form-control" id="month">
-                                            <option value="1" selected="selected">January</option>
-                                            <option value="2">February</option>
-                                            <option value="3">March</option>
-                                            <option value="4">April</option>
-                                            <option value="5">May</option>
-                                            <option value="6">June</option>
-                                            <option value="7">July</option>
-                                            <option value="8">August</option>
-                                            <option value="9">September</option>
-                                            <option value="10">October</option>
-                                            <option value="11">November</option>
-                                            <option value="12">December</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label>Level</label>
-                                        <select class="form-control" id="level">
-                                            <option selected="selected">1</option>
-                                            <script>
-                                                for (var i = 2; i <= 40; i += 1) {
-                                                    document.write('<option>'+i+'</option>');
-                                                }
-                                            </script>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2" style="margin-top: 25px">
-                                    <button type="submit" onclick="update()" class="btn btn-primary">submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box box-primary">
-                        <div id="main" style="width: 1500px; height: 800px"></div>
-                    </div>
-                </div>
-            </div>
+
+            <!--------------------------
+              | Your Page Content Here |
+              -------------------------->
+
         </section>
     </div>
     <footer class="main-footer">
@@ -306,90 +247,5 @@
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../dist/js/adminlte.min.js"></script>
-<script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('main'));
-
-    $.getJSON('http://localhost:9090/godas/cur?time=' + $("#year").val() + '-' + $("#month").val() + '&level=' + $("#level").val()).done(function (data) {
-        myChart.setOption({
-            title: {
-                text: 'Current (m/s)',
-                subtext: $("#year").val() + '-' + $("#month").val() + ' level ' + $("#level").val(),
-                left: 'center'
-            },
-            visualMap: [{
-                type: 'continuous',
-                show: false,
-                min: 0,
-                max: 0.3,
-                dimension: 4,
-                inRange: {
-                    color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-                }
-            }],
-            xAxis: {
-                type: 'value',
-                name: 'lon - 0.5 (0.5E - 359.5E)',
-                axisLine: {
-                    lineStyle: {
-                        color: '#000'
-                    }
-                },
-                splitLine: {
-                    show: false
-                }
-            },
-            yAxis: {
-                type: 'value',
-                name: '(lat + 74.5) * 3 (74.5S - 64.5N)',
-                axisLine: {
-                    lineStyle: {
-                        color: '#000'
-                    }
-                },
-                splitLine: {
-                    show: false
-                }
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {
-                        title: 'save'
-                    }
-                }
-            },
-            series: [{
-                type: 'flowGL',
-                data: data,
-                particleType: 'line',
-                particleDensity: 512,
-                particleSize: 2,
-                itemStyle: {
-                    opacity: 0.5
-                }
-            }]
-        });
-    });
-
-    function update() {
-        if($("#year").val() == 2018 && $("#month").val() > 3) {
-            var newElement = document.createElement("div");
-            newElement.innerHTML = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-ban"></i> Alert!</h4>You cannot query data after 2018-03. </div>';
-            document.getElementById('alert').innerHTML = newElement.innerHTML;
-            $(window).scrollTop(0);
-        } else {
-            $.getJSON('http://localhost:9090/godas/cur?time=' + $('#year').val() + '-' + $('#month').val() + '&level=' + $("#level").val()).done(function (data) {
-                myChart.setOption({
-                    title: {
-                        subtext: $('#year').val() + '-' + $('#month').val() + ' level ' + $("#level").val()
-                    },
-                    series: {
-                        data: data
-                    }
-                });
-            });
-        }
-    };
-
-</script>
 </body>
 </html>
