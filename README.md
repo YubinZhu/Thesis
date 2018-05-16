@@ -18,7 +18,7 @@ For yubzhu's thesis
 
 ### merged GODAS data
 * download 2000-01 ~ 2018-03 data from https://www.esrl.noaa.gov/psd/data/gridded/data.godas.html
-* put each dataset into directory respectively, path is /misc/GODAS/****/****.20**.nc
+* put each dataset into directory respectively, path is /misc/GODAS/[dataset]/[dataset].20[year].nc
 * run NetCDFMergeTest in ncmerge module and merged data will be in /misc/GODAS/merged
 * create variables_info.txt in /misc/GODAS/merged/ and write anything you want to show in dashboard home page
 
