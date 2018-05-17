@@ -12,5 +12,3 @@ gen
 /app/target/
 /misc/pipe/
 /ui/AdminLTE-2.4.3/
-/ui/app/bower_components/
-/ui/app/dist/
