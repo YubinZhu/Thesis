@@ -25,7 +25,7 @@ public class PotentialTemperature {
     public JSONArray getPottmp(int timeIndex, int levelIndex, float fromLat, float toLat, float fromLon, float toLon) {
         JSONArray saltJsonArray = new JSONArray();
         try {
-            NetcdfFile saltNC = NetcdfFile.open(GodasConfig.GODAS_PATH + "/salt.nc");
+            NetcdfFile saltNC = NetcdfFile.open(GodasConfig.GODAS_PATH + "/pottmp.nc");
             Variable saltVariable = saltNC.findVariable("salt");
             Array saltArray = saltVariable.read(new int[]{timeIndex, levelIndex, 0, 0}, new int[]{1, 1, 418, 360});
             saltArray = saltArray.reduce();

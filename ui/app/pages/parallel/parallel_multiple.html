@@ -316,7 +316,7 @@
     $.getJSON('http://localhost:9090/godas/mixing/4d/nonvector?time=' + $('#year').val() + '-' + $('#month').val() + '&level=' + $('#level').val()).done(function (data) {
         myChart.setOption({
             title: {
-                text: 'Parallel of Surface Data',
+                text: 'Parallel of Multiple Level Data',
                 subtext: $("#year").val() + '-' + $("#month").val() + ' level ' + $("#level").val(),
                 left: 'center'
             },
