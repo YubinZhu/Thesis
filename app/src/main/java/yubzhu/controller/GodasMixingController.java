@@ -81,7 +81,7 @@ public class GodasMixingController {
             jsonArray.put(((JSONArray)jsonArraySalt.get(i)).get(2));
             jsonArray.put(((JSONArray)jsonArrayPottmp.get(i)).get(2));
             jsonArray.put(((JSONArray)jsonArrayDzdt.get(i)).get(2));
-            if ((double)jsonArray.get(2) == 0 && (double)jsonArray.get(3) == 0 && (double)jsonArray.get(4) == 0) {
+            if ((double)jsonArray.get(2) == 0 || (double)jsonArray.get(3) == 0 || (double)jsonArray.get(4) == 0) {
                 continue;
             }
             jsonArray4dNonVector.put(jsonArray);
